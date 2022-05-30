@@ -8,7 +8,7 @@ import MenuItem from './MenuItem';
 
 const cx = classNames.bind(styles);
 
-const Menu = ({ children, items = [], onChange = () => {} }) => {
+const Menu = ({ children, items = [], hideOnClick = false, onChange = () => {}, ...passProps }) => {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
 
@@ -34,8 +34,9 @@ const Menu = ({ children, items = [], onChange = () => {} }) => {
   return (
     <Tippy
       interactive
-      offset={[12,8]}
+      offset={[12, 8]}
       delay={[0, 700]}
+      hideOnClick={hideOnClick}
       placement="bottom-end"
       render={(attrs) => (
         <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
@@ -48,7 +49,7 @@ const Menu = ({ children, items = [], onChange = () => {} }) => {
                 }}
               />
             )}
-            {renderItems()}
+            <div className={cx('menu-body')}>{renderItems()}</div>
           </PopperWrapper>
         </div>
       )}
